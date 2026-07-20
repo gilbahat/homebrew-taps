@@ -12,8 +12,8 @@ class VsockEmulationLayer < Formula
     system "make", "install", "PREFIX=#{prefix}"
     # Give the dylib an absolute install name so linkers (tier 2) resolve it
     # without an explicit -rpath.
-    system "install_name_tool", "-id", "#{lib}/libvsock_unix.dylib",
-                                "#{lib}/libvsock_unix.dylib"
+    MachO::Tools.change_dylib_id("#{lib}/libvsock_unix.dylib",
+                                 "#{lib}/libvsock_unix.dylib")
   end
 
   test do
